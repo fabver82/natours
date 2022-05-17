@@ -7,7 +7,10 @@ const userRouter = require("./routes/userRoutes");
 const app = express();
 
 //1)middle wares
-app.use(morgan("dev"));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
 app.use((req, res, next) => {
   console.log("hello from middleware");
   next();
@@ -18,7 +21,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.json()); //middleware for express
-
+app.use(express.static(`${__dirname}/public`));
 //2) ROUTE HANDLER
 
 // app.get("/api/v1/tours/:id?", getTour);
@@ -29,8 +32,5 @@ app.use(express.json()); //middleware for express
 //3) ROUTES
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
-//4) START SERVER
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
-});
+
+module.exports = app;
