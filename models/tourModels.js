@@ -4,11 +4,21 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    trim: true,
   },
   description: {
     type: String,
     required: [true, "a post must have a title"],
   },
+  location: {
+    type: String,
+    required: [true, "a post must have a location"],
+  },
+  imageCover: {
+    type: String,
+    required: [true, "a post must have a cover image"],
+  },
+  images: [String],
   createAt: {
     type: Date,
     default: Date.now,
@@ -17,7 +27,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: [true, "a post must have a description"],
   },
-  rating: {
+  ratingsAverage: {
+    type: Number,
+    defaut: 0,
+  },
+  ratingsQuantity: {
     type: Number,
     default: 0,
   },

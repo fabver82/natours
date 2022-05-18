@@ -107,3 +107,20 @@ exports.updateTour = async (req, res) => {
     });
   }
 };
+exports.deleteTour = async (req, res) => {
+  try {
+    await Post.deleteOne({ _id: req.params.id });
+    // await Post.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: "success",
+      data: {
+        post: null,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: "invalid data sent",
+    });
+  }
+};
